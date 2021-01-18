@@ -113,6 +113,26 @@ test:tools:
     - rm -rf ~/.gradle/daemon/
     - GRADLE_OPTS="-XX:MaxPermSize=512m -Xmx2560m" ./gradlew :unitTestTools --stacktrace --no-daemon
 
+test:integration-min:
+  tags: [ "runner:docker", "size:large" ]
+  image: $CI_IMAGE_DOCKER
+  stage: test
+  timeout: 1h
+  script:
+    - git fetch --depth=1 origin master
+    - rm -rf ~/.gradle/daemon/
+    - ./run_instrumented.sh emulator_min_sdk
+
+test:integration-max:
+  tags: [ "runner:docker", "size:large" ]
+  image: $CI_IMAGE_DOCKER
+  stage: test
+  timeout: 1h
+  script:
+    - git fetch --depth=1 origin master
+    - rm -rf ~/.gradle/daemon/
+    - ./run_instrumented.sh emulator_max_sdk
+
 # PUBLISH ARTIFACTS ON BINTRAY
 
 publish:release:

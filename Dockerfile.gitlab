@@ -10,10 +10,16 @@ RUN set -x \
  && apt-get -y install --no-install-recommends \
     curl \
     git \
-    unzip \
+    unzip \ 
     wget \
     openssh-client \
     expect \
+    cpu-checker \
+    qemu-kvm \
+    libvirt-bin \
+    ubuntu-vm-builder \
+    bridge-utils \
+    ia32-libs-multiarch \
  && apt-get -y clean \
  && rm -rf /var/lib/apt/lists/*
 
@@ -23,8 +29,8 @@ ENV ANDROID_BUILD_TOOLS 30.0.2
 ENV ANDROID_SDK_TOOLS  4333796
 ENV NDK_VERSION 21.3.6528147
 ENV CMAKE_VERSION 3.10.2.4988404
-
-
+ENV ANDROID_EMULATOR_MIN_IMAGE=system-images;android-19;default;x86
+ENV ANDROID_EMULATOR_MAX_IMAGE=system-images;android-30;google_apis;x86_64
 
 RUN apt update && apt install -y python3
 
@@ -53,16 +59,29 @@ RUN mkdir /root/.android \
 
 
 # Android SDK
-RUN \
+RUN set -x && \
     wget --quiet --output-document=android-sdk.zip https://dl.google.com/android/repository/sdk-tools-linux-${ANDROID_SDK_TOOLS}.zip && \
     unzip -d android-sdk-linux android-sdk.zip && \
     echo y | android-sdk-linux/tools/bin/sdkmanager "platforms;android-${ANDROID_COMPILE_SDK}" >/dev/null && \
     echo y | android-sdk-linux/tools/bin/sdkmanager "platform-tools" >/dev/null && \
+    echo y | android-sdk-linux/tools/bin/sdkmanager "emulator" >/dev/null && \
     echo y | android-sdk-linux/tools/bin/sdkmanager "build-tools;${ANDROID_BUILD_TOOLS}" >/dev/null && \
+    echo y | android-sdk-linux/tools/bin/sdkmanager "${ANDROID_EMULATOR_MIN_IMAGE}" >/dev/null && \
+    echo y | android-sdk-linux/tools/bin/sdkmanager "${ANDROID_EMULATOR_MAX_IMAGE}" >/dev/null && \
     echo y | android-sdk-linux/tools/bin/sdkmanager --install "ndk;${NDK_VERSION}" >/dev/null && \
     echo y | android-sdk-linux/tools/bin/sdkmanager --install "cmake;${CMAKE_VERSION}" >/dev/null && \
     yes | android-sdk-linux/tools/bin/sdkmanager --licenses
 
+RUN set -x && \
+    android-sdk-linux/tools/bin/avdmanager create avd -n emulator_min_sdk -k "${ANDROID_EMULATOR_MIN_IMAGE}" -d "pixel" && \
+    android-sdk-linux/tools/bin/avdmanager create avd -n emulator_max_sdk -k "${ANDROID_EMULATOR_MAX_IMAGE}" -d "pixel"
+#    avdmanager create avd -n emulator_min_sdk -k "system-images;android-19;default;x86" -d "pixel" && \
+#    avdmanager create avd -n emulator_max_sdk -k "system-images;android-30;google_apis;x86_64" -d "pixel"
+
+# Start the emulator with command
+# android-sdk-linux/emulator/emulator -avd emulator_min_sdk -noaudio -no-boot-anim -gpu off
+
+# AWS / DD
 RUN set -x \
  && curl -OL https://s3.amazonaws.com/dd-package-public/dd-package.deb && dpkg -i dd-package.deb && rm dd-package.deb \
  && apt-get update \
