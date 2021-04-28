@@ -73,6 +73,7 @@ internal abstract class ActivityTrackingTest :
         // activity on pause
         instrumentation.runOnMainSync {
             instrumentation.callActivityOnPause(activity)
+            instrumentation.callActivityOnStop(activity)
         }
 
         instrumentation.waitForIdleSync()
@@ -81,6 +82,7 @@ internal abstract class ActivityTrackingTest :
         // activity start - resume
 
         instrumentation.runOnMainSync {
+            instrumentation.callActivityOnRestart(activity)
             instrumentation.callActivityOnStart(activity)
             instrumentation.callActivityOnResume(activity)
             // this function is only available from Android Q and above
@@ -125,6 +127,7 @@ internal abstract class ActivityTrackingTest :
         // activity on pause
         instrumentation.runOnMainSync {
             instrumentation.callActivityOnPause(activity)
+            instrumentation.callActivityOnStop(activity)
         }
 
         return expectedEvents
