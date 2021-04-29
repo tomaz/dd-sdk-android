@@ -15,6 +15,7 @@ import com.datadog.android.sdk.rules.RumMockServerActivityTestRule
 import com.datadog.tools.unit.ConditionWatcher
 import org.junit.After
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -42,6 +43,7 @@ internal class ConsentGrantedActivityTrackingTest : ActivityTrackingTest() {
     }
 
     @Test
+    @Ignore("Invalid ?")
     fun verifyRumEvents() {
         val expectedEvents = runInstrumentationScenario(mockServerRule)
 
