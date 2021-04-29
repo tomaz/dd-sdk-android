@@ -41,7 +41,6 @@ internal class ConsentGrantedActivityTrackingTest : ActivityTrackingTest() {
         Log.wtf("CGATT", "tearDown()")
     }
 
-
     @Test
     fun verifyRumEvents() {
         val expectedEvents = runInstrumentationScenario(mockServerRule)
@@ -53,6 +52,6 @@ internal class ConsentGrantedActivityTrackingTest : ActivityTrackingTest() {
             Log.wtf("CGATT", "ConditionWatcher ?")
             verifyExpectedEvents(mockServerRule.getRequests(), expectedEvents)
             true
-        }.doWait(timeoutMs = FINAL_WAIT_MS)
+        }.doWait()
     }
 }

@@ -93,7 +93,7 @@ internal class ResourceTrackingTest {
                 )
             )
             true
-        }.doWait(timeoutMs = RumTest.FINAL_WAIT_MS)
+        }.doWait()
     }
 
     @Test
@@ -126,7 +126,7 @@ internal class ResourceTrackingTest {
                 )
             )
             true
-        }.doWait(timeoutMs = RumTest.FINAL_WAIT_MS)
+        }.doWait()
     }
 
     private fun List<HandledRequest>.rumEventsBy(

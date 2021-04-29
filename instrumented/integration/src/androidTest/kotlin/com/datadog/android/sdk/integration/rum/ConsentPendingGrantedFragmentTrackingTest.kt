@@ -41,6 +41,6 @@ internal class ConsentPendingGrantedFragmentTrackingTest : FragmentTrackingTest(
         ConditionWatcher {
             verifyExpectedEvents(mockServerRule.getRequests(), expectedEvents)
             true
-        }.doWait(timeoutMs = FINAL_WAIT_MS)
+        }.doWait()
     }
 }

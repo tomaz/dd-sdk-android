@@ -30,10 +30,15 @@ class ConditionWatcher(
      * satisfied in the given timeout period.
      * @param timeoutMs Maximum timeout in milliseconds.
      */
-    fun doWait(timeoutMs: Long = DEFAULT_TIMEOUT_LIMIT_MS) {
+    fun doWait(
+        initialWait: Long = DEFAULT_INITIAL_WAIT_MS,
+        timeoutMs: Long = DEFAULT_TIMEOUT_LIMIT_MS
+    ) {
         var elapsedTime = 0L
         var isConditionMet = false
         var lastAssertionError: AssertionError? = null
+
+        Thread.sleep(initialWait)
 
         do {
             var invocationResult = false
@@ -83,6 +88,8 @@ class ConditionWatcher(
          * Default condition polling interval in milliseconds.
          */
         const val DEFAULT_INTERVAL_MS = 250L
+
+        const val DEFAULT_INITIAL_WAIT_MS = 1000 * 10L
     }
 
     /**

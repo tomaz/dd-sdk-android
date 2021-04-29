@@ -10,8 +10,6 @@ import android.os.Build
 import android.util.Log
 import androidx.test.platform.app.InstrumentationRegistry
 import com.datadog.android.sdk.rules.RumMockServerActivityTestRule
-import org.junit.After
-import org.junit.Before
 
 internal abstract class ActivityTrackingTest :
     RumTest<ActivityTrackingPlaygroundActivity,

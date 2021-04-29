@@ -111,8 +111,6 @@ internal abstract class LogsTest {
         private const val TAG_LOGGER_NAME = "name"
         private const val TAG_VERSION_NAME = "version"
 
-        internal val INITIAL_WAIT_MS = TimeUnit.SECONDS.toMillis(60)
-
         private val levels = arrayOf(
             "debug",
             "debug",

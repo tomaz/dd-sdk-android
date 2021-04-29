@@ -41,6 +41,6 @@ internal class ConsentPendingNotGrantedFragmentTrackingTest : FragmentTrackingTe
         ConditionWatcher {
             verifyNoRumPayloadSent(mockServerRule.getRequests())
             true
-        }.doWait(timeoutMs = FINAL_WAIT_MS)
+        }.doWait()
     }
 }

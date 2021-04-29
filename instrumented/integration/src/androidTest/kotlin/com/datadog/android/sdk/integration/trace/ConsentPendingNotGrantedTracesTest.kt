@@ -47,6 +47,6 @@ internal class ConsentPendingNotGrantedTracesTest : TracesTest() {
                 .filter { it.url?.isTracesUrl() ?: false }
             assertThat(tracePayloads).isEmpty()
             true
-        }.doWait(timeoutMs = INITIAL_WAIT_MS)
+        }.doWait()
     }
 }

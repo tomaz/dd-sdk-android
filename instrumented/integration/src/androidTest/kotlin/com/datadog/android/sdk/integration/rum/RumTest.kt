@@ -46,7 +46,4 @@ internal abstract class RumTest<R : Activity, T : MockServerActivityTestRule<R>>
         assertThat(rumPayloads).isEmpty()
     }
 
-    companion object {
-        internal val FINAL_WAIT_MS = TimeUnit.SECONDS.toMillis(60)
-    }
 }

@@ -41,6 +41,6 @@ internal class ConsentPendingNotGrantedGesturesTrackingTest : GesturesTrackingTe
         ConditionWatcher {
             verifyNoRumPayloadSent(mockServerRule.getRequests())
             return@ConditionWatcher true
-        }.doWait(timeoutMs = FINAL_WAIT_MS)
+        }.doWait()
     }
 }

@@ -37,6 +37,6 @@ internal class ConsentGrantedLogsTest : LogsTest() {
             // verify the captured log events into the MockedWebServer
             verifyExpectedLogs(mockServerRule.activity, mockServerRule.getRequests())
             true
-        }.doWait(timeoutMs = INITIAL_WAIT_MS)
+        }.doWait()
     }
 }

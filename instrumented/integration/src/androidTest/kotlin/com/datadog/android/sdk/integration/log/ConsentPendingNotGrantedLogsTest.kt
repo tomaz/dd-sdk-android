@@ -44,6 +44,6 @@ internal class ConsentPendingNotGrantedLogsTest : LogsTest() {
                 .filter { it.url?.isLogsUrl() ?: false }
             assertThat(logsPayloads).isEmpty()
             true
-        }.doWait(timeoutMs = INITIAL_WAIT_MS)
+        }.doWait()
     }
 }

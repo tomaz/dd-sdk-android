@@ -42,6 +42,6 @@ internal class ConsentPendingNotGrantedActivityTrackingTest : ActivityTrackingTe
         ConditionWatcher {
             verifyNoRumPayloadSent(mockServerRule.getRequests())
             true
-        }.doWait(timeoutMs = FINAL_WAIT_MS)
+        }.doWait()
     }
 }

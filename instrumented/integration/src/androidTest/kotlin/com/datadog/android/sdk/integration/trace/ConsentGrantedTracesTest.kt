@@ -41,6 +41,6 @@ internal class ConsentGrantedTracesTest : TracesTest() {
             verifyExpectedSpans(handledRequests, mockServerRule.activity.getSentSpans())
             verifyExpectedLogs(handledRequests, mockServerRule.activity.getSentLogs())
             true
-        }.doWait(timeoutMs = INITIAL_WAIT_MS)
+        }.doWait()
     }
 }
