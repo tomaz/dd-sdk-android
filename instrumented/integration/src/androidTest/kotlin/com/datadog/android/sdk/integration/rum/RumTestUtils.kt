@@ -18,7 +18,7 @@ internal const val CONTEXT_PREFIX = "context."
 
 internal fun rumPayloadToJsonList(payload: String): List<JsonObject> {
     return payload.split(Regex("\n"))
-        .map { JsonParser.parseString(it) as JsonObject }
+        .mapNotNull { JsonParser.parseString(it) as? JsonObject }
 }
 
 internal fun List<JsonObject>.verifyEventMatches(
