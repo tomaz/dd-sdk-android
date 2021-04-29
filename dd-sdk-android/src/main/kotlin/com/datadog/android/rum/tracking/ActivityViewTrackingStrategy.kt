@@ -123,7 +123,7 @@ class ActivityViewTrackingStrategy @JvmOverloads constructor(
         viewLoadingTimer.getLoadingTime(activity)?.let { loadingTime ->
             val advancedRumMonitor = GlobalRum.get() as? AdvancedRumMonitor
             if (advancedRumMonitor == null) {
-                Log.wtf("AVTS", "Monitor is not advancedRumMonitor")
+                Log.wtf("DD::AVTS", "Monitor is not advancedRumMonitor")
             }
             advancedRumMonitor?.let { monitor ->
                 val loadingType = resolveLoadingType(viewLoadingTimer.isFirstTimeLoading(activity))

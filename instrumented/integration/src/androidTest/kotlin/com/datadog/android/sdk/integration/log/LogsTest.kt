@@ -17,7 +17,6 @@ import com.datadog.android.sdk.utils.isLogsUrl
 import com.datadog.tools.unit.assertj.JsonObjectAssert
 import com.google.gson.JsonObject
 import java.util.Date
-import java.util.concurrent.TimeUnit
 import org.assertj.core.api.Assertions.assertThat
 
 internal abstract class LogsTest {

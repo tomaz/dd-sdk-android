@@ -21,7 +21,7 @@ internal abstract class ActivityTrackingTest :
         mockServerRule: RumMockServerActivityTestRule<ActivityTrackingPlaygroundActivity>
     ): MutableList<ExpectedEvent> {
 
-        Log.wtf(this.javaClass.simpleName, "runInstrumentationScenario()")
+        Log.wtf("DD::ATT", "runInstrumentationScenario() [${this.javaClass.simpleName}]")
 
         val expectedEvents = mutableListOf<ExpectedEvent>()
         val instrumentation = InstrumentationRegistry.getInstrumentation()

@@ -33,12 +33,12 @@ internal class ConsentGrantedActivityTrackingTest : ActivityTrackingTest() {
 
     @Before
     fun setUp() {
-        Log.wtf("CGATT", "setUp()")
+        Log.wtf("DD::CGATT", "setUp()")
     }
 
     @After
     fun tearDown() {
-        Log.wtf("CGATT", "tearDown()")
+        Log.wtf("DD::CGATT", "tearDown()")
     }
 
     @Test
@@ -49,9 +49,11 @@ internal class ConsentGrantedActivityTrackingTest : ActivityTrackingTest() {
         InstrumentationRegistry.getInstrumentation().waitForIdleSync()
 
         ConditionWatcher {
-            Log.wtf("CGATT", "ConditionWatcher ?")
+            Log.wtf("DD::CGATT", "ConditionWatcher ?")
             verifyExpectedEvents(mockServerRule.getRequests(), expectedEvents)
             true
         }.doWait()
+
+        Log.wtf("DD::CGATT", "End of Test")
     }
 }

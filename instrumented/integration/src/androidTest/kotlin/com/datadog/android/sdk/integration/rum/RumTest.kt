@@ -13,7 +13,6 @@ import com.datadog.android.sdk.rules.HandledRequest
 import com.datadog.android.sdk.rules.MockServerActivityTestRule
 import com.datadog.android.sdk.utils.isRumUrl
 import com.google.gson.JsonObject
-import java.util.concurrent.TimeUnit
 import org.assertj.core.api.Assertions.assertThat
 
 internal abstract class RumTest<R : Activity, T : MockServerActivityTestRule<R>> {
@@ -45,5 +44,4 @@ internal abstract class RumTest<R : Activity, T : MockServerActivityTestRule<R>>
             .filter { it.url?.isRumUrl() ?: false }
         assertThat(rumPayloads).isEmpty()
     }
-
 }

@@ -173,7 +173,7 @@ class NavigationViewTrackingStrategy(
             if (key != NavControllerFragmentLifecycleCallbacks.NO_DESTINATION_FOUND) {
                 advancedRumMonitor.updateViewLoadingTime(key, loadingTimeInNs, type)
             } else {
-                Log.wtf("RUMMonitor", "updateViewLoadingTime() ignored (not a valid nav dest)")
+                Log.wtf("DD::RUMMonitor", "updateViewLoadingTime() ignored (not a valid nav dest)")
             }
         }
     }

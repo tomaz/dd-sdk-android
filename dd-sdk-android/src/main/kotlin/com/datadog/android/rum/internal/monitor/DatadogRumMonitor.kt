@@ -226,7 +226,7 @@ internal class DatadogRumMonitor(
         loadingTimeInNs: Long,
         type: ViewEvent.LoadingType
     ) {
-        Log.wtf("RUM Monitor", "updateViewLoadingTime($key, $loadingTimeInNs, $type)")
+        Log.wtf("DD::RUM Monitor", "updateViewLoadingTime($key, $loadingTimeInNs, $type)")
         handleEvent(
             RumRawEvent.UpdateViewLoadingTime(key, loadingTimeInNs, type)
         )

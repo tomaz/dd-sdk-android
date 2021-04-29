@@ -54,6 +54,7 @@ internal open class MockServerActivityTestRule<T : Activity>(
     }
 
     override fun beforeActivityLaunched() {
+        Log.wtf("DD::MSATR", "beforeActivityLaunched()")
         InstrumentationRegistry
             .getInstrumentation()
             .targetContext
