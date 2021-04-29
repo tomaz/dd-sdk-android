@@ -70,21 +70,22 @@ internal abstract class ActivityTrackingTest :
             )
         )
 
-        // activity on pause
-        instrumentation.runOnMainSync {
-            instrumentation.callActivityOnPause(activity)
-            instrumentation.callActivityOnStop(activity)
-        }
-
+        // activity on pause / stop
+        instrumentation.runOnMainSync { instrumentation.callActivityOnPause(activity) }
+        instrumentation.waitForIdleSync()
+        instrumentation.runOnMainSync { instrumentation.callActivityOnStop(activity) }
         instrumentation.waitForIdleSync()
 
         Thread.sleep(500)
-        // activity start - resume
 
+        // activity restart - start - resume - postresume
+        instrumentation.runOnMainSync { instrumentation.callActivityOnRestart(activity) }
+        instrumentation.waitForIdleSync()
+        instrumentation.runOnMainSync { instrumentation.callActivityOnStart(activity) }
+        instrumentation.waitForIdleSync()
+        instrumentation.runOnMainSync { instrumentation.callActivityOnResume(activity) }
+        instrumentation.waitForIdleSync()
         instrumentation.runOnMainSync {
-            instrumentation.callActivityOnRestart(activity)
-            instrumentation.callActivityOnStart(activity)
-            instrumentation.callActivityOnResume(activity)
             // this function is only available from Android Q and above
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 // we cannot instrument the onPostResume so we had to improvise this
@@ -124,11 +125,11 @@ internal abstract class ActivityTrackingTest :
             )
         )
 
-        // activity on pause
-        instrumentation.runOnMainSync {
-            instrumentation.callActivityOnPause(activity)
-            instrumentation.callActivityOnStop(activity)
-        }
+        // activity on pause / stop
+        instrumentation.runOnMainSync { instrumentation.callActivityOnPause(activity) }
+        instrumentation.waitForIdleSync()
+        instrumentation.runOnMainSync { instrumentation.callActivityOnStop(activity) }
+        instrumentation.waitForIdleSync()
 
         return expectedEvents
     }
