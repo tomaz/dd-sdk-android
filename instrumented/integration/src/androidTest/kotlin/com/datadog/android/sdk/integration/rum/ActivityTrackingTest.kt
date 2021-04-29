@@ -7,8 +7,11 @@
 package com.datadog.android.sdk.integration.rum
 
 import android.os.Build
+import android.util.Log
 import androidx.test.platform.app.InstrumentationRegistry
 import com.datadog.android.sdk.rules.RumMockServerActivityTestRule
+import org.junit.After
+import org.junit.Before
 
 internal abstract class ActivityTrackingTest :
     RumTest<ActivityTrackingPlaygroundActivity,
@@ -19,6 +22,8 @@ internal abstract class ActivityTrackingTest :
     override fun runInstrumentationScenario(
         mockServerRule: RumMockServerActivityTestRule<ActivityTrackingPlaygroundActivity>
     ): MutableList<ExpectedEvent> {
+
+        Log.wtf(this.javaClass.simpleName, "runInstrumentationScenario()")
 
         val expectedEvents = mutableListOf<ExpectedEvent>()
         val instrumentation = InstrumentationRegistry.getInstrumentation()
@@ -130,6 +135,8 @@ internal abstract class ActivityTrackingTest :
         instrumentation.waitForIdleSync()
         instrumentation.runOnMainSync { instrumentation.callActivityOnStop(activity) }
         instrumentation.waitForIdleSync()
+
+        Thread.sleep(500)
 
         return expectedEvents
     }

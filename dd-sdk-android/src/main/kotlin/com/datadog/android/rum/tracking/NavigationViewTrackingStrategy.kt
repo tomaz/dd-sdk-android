@@ -8,6 +8,7 @@ package com.datadog.android.rum.tracking
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -171,6 +172,8 @@ class NavigationViewTrackingStrategy(
         ) {
             if (key != NavControllerFragmentLifecycleCallbacks.NO_DESTINATION_FOUND) {
                 advancedRumMonitor.updateViewLoadingTime(key, loadingTimeInNs, type)
+            } else {
+                Log.wtf("RUMMonitor", "updateViewLoadingTime() ignored (not a valid nav dest)")
             }
         }
     }

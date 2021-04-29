@@ -7,6 +7,7 @@
 package com.datadog.android.rum.internal.monitor
 
 import android.os.Handler
+import android.util.Log
 import com.datadog.android.core.internal.net.FirstPartyHostDetector
 import com.datadog.android.core.internal.persistence.DataWriter
 import com.datadog.android.rum.RumActionType
@@ -225,6 +226,7 @@ internal class DatadogRumMonitor(
         loadingTimeInNs: Long,
         type: ViewEvent.LoadingType
     ) {
+        Log.wtf("RUM Monitor", "updateViewLoadingTime($key, $loadingTimeInNs, $type)")
         handleEvent(
             RumRawEvent.UpdateViewLoadingTime(key, loadingTimeInNs, type)
         )

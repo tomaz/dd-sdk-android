@@ -8,6 +8,7 @@ package com.datadog.android.rum.tracking
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import com.datadog.android.core.internal.utils.resolveViewName
 import com.datadog.android.core.internal.utils.runIfValid
 import com.datadog.android.rum.GlobalRum
@@ -121,6 +122,9 @@ class ActivityViewTrackingStrategy @JvmOverloads constructor(
     private fun updateLoadingTime(activity: Activity) {
         viewLoadingTimer.getLoadingTime(activity)?.let { loadingTime ->
             val advancedRumMonitor = GlobalRum.get() as? AdvancedRumMonitor
+            if (advancedRumMonitor == null) {
+                Log.wtf("AVTS", "Monitor is not advancedRumMonitor")
+            }
             advancedRumMonitor?.let { monitor ->
                 val loadingType = resolveLoadingType(viewLoadingTimer.isFirstTimeLoading(activity))
                 monitor.updateViewLoadingTime(

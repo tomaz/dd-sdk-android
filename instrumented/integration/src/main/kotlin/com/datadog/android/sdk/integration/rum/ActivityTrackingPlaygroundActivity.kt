@@ -21,6 +21,7 @@ internal class ActivityTrackingPlaygroundActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.wtf("ActivityTrackingPlaygroundActivity", "onCreate()")
 
         val credentials = RuntimeConfig.credentials()
         // we will use a large long task threshold to make sure we will not have LongTask events
@@ -37,5 +38,35 @@ internal class ActivityTrackingPlaygroundActivity : AppCompatActivity() {
 
         GlobalRum.registerIfAbsent(RumMonitor.Builder().build())
         setContentView(R.layout.fragment_tracking_layout)
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.wtf("ActivityTrackingPlaygroundActivity", "onRestart()")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.wtf("ActivityTrackingPlaygroundActivity", "onStart()")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.wtf("ActivityTrackingPlaygroundActivity", "onResume()")
+    }
+
+    override fun onPostResume() {
+        super.onPostResume()
+        Log.wtf("ActivityTrackingPlaygroundActivity", "onPostResume()")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.wtf("ActivityTrackingPlaygroundActivity", "onPause()")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.wtf("ActivityTrackingPlaygroundActivity", "onStop()")
     }
 }

@@ -6,12 +6,15 @@
 
 package com.datadog.android.sdk.integration.rum
 
+import android.util.Log
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import com.datadog.android.privacy.TrackingConsent
 import com.datadog.android.sdk.rules.RumMockServerActivityTestRule
 import com.datadog.tools.unit.ConditionWatcher
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -28,6 +31,17 @@ internal class ConsentGrantedActivityTrackingTest : ActivityTrackingTest() {
         trackingConsent = TrackingConsent.GRANTED
     )
 
+    @Before
+    fun setUp() {
+        Log.wtf("CGATT", "setUp()")
+    }
+
+    @After
+    fun tearDown() {
+        Log.wtf("CGATT", "tearDown()")
+    }
+
+
     @Test
     fun verifyRumEvents() {
         val expectedEvents = runInstrumentationScenario(mockServerRule)
@@ -36,6 +50,7 @@ internal class ConsentGrantedActivityTrackingTest : ActivityTrackingTest() {
         InstrumentationRegistry.getInstrumentation().waitForIdleSync()
 
         ConditionWatcher {
+            Log.wtf("CGATT", "ConditionWatcher ?")
             verifyExpectedEvents(mockServerRule.getRequests(), expectedEvents)
             true
         }.doWait(timeoutMs = FINAL_WAIT_MS)
