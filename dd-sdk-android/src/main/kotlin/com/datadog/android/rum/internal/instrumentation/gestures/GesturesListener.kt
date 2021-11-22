@@ -188,12 +188,7 @@ internal class GesturesListener(
             // removeFirst can't fail because we checked isNotEmpty
             @Suppress("UnsafeThirdPartyFunctionCall")
             val view = queue.removeFirst()
-            if (queue.isEmpty() &&
-                view::class.java.name.startsWith("androidx.compose.ui.platform.ComposeView")
-            ) {
-                // startsWith here is to make testing easier: mocks don't have name exactly
-                // like this, and writing manual stub is not possible, because some necessary
-                // methods are final.
+            if (queue.isEmpty() && isJetpackComposeView(view)) {
                 notifyMissingTarget = false
             }
 
@@ -216,10 +211,14 @@ internal class GesturesListener(
         val queue = LinkedList<View>()
         queue.add(decorView)
 
+        var notifyMissingTarget = true
         while (queue.isNotEmpty()) {
             // removeFirst can't fail because we checked isNotEmpty
             @Suppress("UnsafeThirdPartyFunctionCall")
             val view = queue.removeFirst()
+            if (queue.isEmpty() && isJetpackComposeView(view)) {
+                notifyMissingTarget = false
+            }
 
             if (isValidScrollableTarget(view)) {
                 return view
@@ -229,7 +228,11 @@ internal class GesturesListener(
                 handleViewGroup(view, x, y, queue, coordinatesContainer)
             }
         }
-        devLogger.i(MSG_NO_TARGET_SCROLL_SWIPE)
+
+        if (notifyMissingTarget) {
+            devLogger.i(MSG_NO_TARGET_SCROLL_SWIPE)
+        }
+
         return null
     }
 
@@ -297,6 +300,13 @@ internal class GesturesListener(
 
     private fun View.targetClassName(): String {
         return this.javaClass.canonicalName ?: this.javaClass.simpleName
+    }
+
+    private fun isJetpackComposeView(view: View): Boolean {
+        // startsWith here is to make testing easier: mocks don't have name exactly
+        // like this, and writing manual stub is not possible, because some necessary
+        // methods are final.
+        return view::class.java.name.startsWith("androidx.compose.ui.platform.ComposeView")
     }
 
     // endregion
