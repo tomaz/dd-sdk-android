@@ -290,7 +290,7 @@ private val ScrollableState.currentPosition: Int?
     }
 
 private fun resolveSwipeChangeAttributes(
-    dragStartProperties: SwipeStartProps,
+    swipeStartProps: SwipeStartProps,
     swipeableState: SwipeableState<*>,
     orientation: Orientation,
     reverseDirection: Boolean,
@@ -301,7 +301,7 @@ private fun resolveSwipeChangeAttributes(
     // same bug as described below
     // roundToInt can throw exception for Float.NaN, but we won't get such value
     @Suppress("UnsafeThirdPartyFunctionCall")
-    val directionSign = swipeableState.offset.value.roundToInt() - dragStartProperties.offset
+    val directionSign = swipeableState.offset.value.roundToInt() - swipeStartProps.offset
     val direction = resolveDragDirection(
         if (reverseDirection) -directionSign else directionSign,
         orientation,
@@ -309,7 +309,7 @@ private fun resolveSwipeChangeAttributes(
     )
 
     return mapOf(
-        FROM_SWIPE_STATE_ATTRIBUTE to dragStartProperties.anchorState,
+        FROM_SWIPE_STATE_ATTRIBUTE to swipeStartProps.anchorState,
         // https://issuetracker.google.com/issues/149549482
         // There is a Compose bug: if drag stopped (pointer up) and threshold for the next value is
         // not yet reached, but there is enough velocity to continue the fling, this will
@@ -320,15 +320,15 @@ private fun resolveSwipeChangeAttributes(
 }
 
 private fun resolveScrollChangeAttributes(
-    dragStartProperties: ScrollStartProps,
-    swipeableState: ScrollableState,
+    scrollStartProps: ScrollStartProps,
+    scrollableState: ScrollableState,
     orientation: Orientation,
     reverseDirection: Boolean,
     isRtl: Boolean
 ): Map<String, Any?> {
 
-    val startOffset = dragStartProperties.position
-    val endOffset = swipeableState.currentPosition
+    val startOffset = scrollStartProps.position
+    val endOffset = scrollableState.currentPosition
 
     return if (startOffset != null && endOffset != null) {
         val directionSign = -(endOffset - startOffset)
